@@ -3,3 +3,19 @@
 #docker in root project foolder "APPPROJECT"
 .dockerignore
 docker-compose.yml
+
+#node
+node_modules/
+dist/
+.env    
+*.log
+
+
+# OS
+.DS_Store
+
+
+# tests
+coverage/
+
+
