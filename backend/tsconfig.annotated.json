@@ -1,0 +1,104 @@
+{
+  "compilerOptions": {
+    // 🧠 Define el sistema de módulos: commonjs para compatibilidad con Node.js
+    "module": "commonjs",
+
+    // 🛠️ Genera archivos `.d.ts` para declarar tipos de tus módulos al compilar
+    "declaration": true,
+
+    // 🧼 Elimina los comentarios del JS compilado
+    "removeComments": true,
+
+    // ⚙️ Requerido por NestJS para habilitar los decoradores como @Injectable, @Controller
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
+    // ✅ Permite importar módulos ES6 por defecto (ej. `import express from 'express'`)
+    "allowSyntheticDefaultImports": true,
+
+    // 🎯 Define la versión de ECMAScript a compilar: ES2023 te da async/await y otras mejoras modernas
+    "target": "ES2023",
+
+    // 🪬 Incluye archivos `.map` para depuración (útil para debugging con VSCode)
+    "sourceMap": true,
+
+    // 📁 Carpeta de salida donde se compilan los archivos `.js`: `./dist`
+    "outDir": "./dist",
+
+    // 📌 Define la raíz lógica para imports relativos: ahora `src` es la raíz
+    // 🛠️ Esto permite usar `@auth` en lugar de `../../../auth`
+    "baseUrl": "./src",
+
+    // ✅ Definición de alias de rutas para toda la estructura modular y de carpetas
+    // Cada uno corresponde a una subcarpeta importante definida en los pasos 8–19
+    "paths": {
+      // 🧠 CORE (lógica base y compartida)
+      "@core/*": ["core/*"],
+      "@common/*": ["core/common/*"],
+      "@config/*": ["core/config/*"],
+      "@database/*": ["core/database/*"],
+      "@i18n/*": ["core/i18n/*"],
+      "@realtime/*": ["core/realtime/*"],
+      "@audit/*": ["core/audit/*"],
+
+      // 📦 MODULES (funcionalidades independientes tipo microservicio)
+      "@modules/*": ["modules/*"],
+      "@auth/*": ["modules/auth/*"],
+      "@users/*": ["modules/users/*"],
+      "@restaurants/*": ["modules/restaurants/*"],
+      "@orders/*": ["modules/orders/*"],
+      "@riders/*": ["modules/riders/*"],
+      "@payments/*": ["modules/payments/*"],
+      "@notifications/*": ["modules/notifications/*"],
+      "@support/*": ["modules/support/*"],
+      "@geo/*": ["modules/geo/*"],
+      "@analytics/*": ["modules/analytics/*"],
+      "@promotions/*": ["modules/promotions/*"],
+      "@reviews/*": ["modules/reviews/*"],
+      "@recommendations/*": ["modules/recommendations/*"],
+      "@scheduling/*": ["modules/scheduling/*"],
+      "@disputes/*": ["modules/disputes/*"],
+      "@pricing/*": ["modules/pricing/*"],
+
+      // 🔄 FUNCIONALIDADES TRANSVERSALES
+      "@uploads/*": ["uploads/*"],
+      "@jobs/*": ["jobs/*"],
+      "@utils/*": ["utils/*"],
+      "@middlewares/*": ["middlewares/*"],
+      "@services/*": ["services/*"],
+      "@routes/*": ["routes/*"],
+      "@models/*": ["models/*"],
+
+      // 🧪 TESTING & DB
+      "@tests/*": ["tests/*"],
+      "@migrations/*": ["migrations/*"]
+    },
+
+    // 🧠 Habilita recompilación incremental para mejorar velocidad en proyectos grandes
+    "incremental": true,
+
+    // 🚫 Evita validaciones innecesarias de tipos en dependencias externas
+    "skipLibCheck": true,
+
+    // ✅ Asegura que no se pueda asignar `null` o `undefined` a cualquier tipo sin declararlo
+    "strictNullChecks": true,
+
+    // 🔠 Evita errores por diferencias entre mayúsculas y minúsculas en nombres de archivos (útil en Linux)
+    "forceConsistentCasingInFileNames": true,
+
+    // 🚫 Desactiva errores por usar `any` implícitamente. Puedes cambiar a `true` si quieres máxima seguridad
+    "noImplicitAny": false,
+
+    // 🛠️ Puedes ajustar si quieres obligar a que `.bind`, `.call` o `.apply` respeten tipos (avanzado)
+    "strictBindCallApply": false,
+
+    // 🧪 Avisa si te olvidas un `break` en un `switch`
+    "noFallthroughCasesInSwitch": false
+  },
+
+  // ✅ Incluye solo código fuente real del proyecto (lo que está dentro de `src`)
+  "include": ["src/**/*"],
+
+  // ❌ Excluye: librerías, carpeta de build, y carpeta de tests
+  "exclude": ["node_modules", "dist", "test"]
+}
