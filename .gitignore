@@ -1,0 +1,5 @@
+.github/
+
+#docker in root project foolder "APPPROJECT"
+.dockerignore
+docker-compose.yml
