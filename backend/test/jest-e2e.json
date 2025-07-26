@@ -1,9 +1,21 @@
 {
   "moduleFileExtensions": ["js", "json", "ts"],
-  "rootDir": ".",
-  "testEnvironment": "node",
+  "rootDir": "../src",
   "testRegex": ".e2e-spec.ts$",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "collectCoverageFrom": ["**/*.(t|j)s"],
+  "coverageDirectory": "../coverage",
+  "testEnvironment": "node",
+  "moduleNameMapper": {
+    "^@core/(.*)$": "<rootDir>/core/$1",
+    "^@common/(.*)$": "<rootDir>/core/common/$1",
+    "^@database/(.*)$": "<rootDir>/core/database/$1",
+    "^@modules/(.*)$": "<rootDir>/modules/$1",
+    "^@entities/(.*)$": "<rootDir>/core/database/entities/$1",
+    "^@utils/(.*)$": "<rootDir>/utils/$1",
+    "^@uploads/(.*)$": "<rootDir>/uploads/$1",
+    "^@/(.*)$": "<rootDir>/$1"
   }
 }
