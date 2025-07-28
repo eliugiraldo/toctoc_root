@@ -1,3 +1,5 @@
+// backend\src\modules\users\users.controller.ts
+
 import { 
   Controller, 
   Get, 
@@ -16,16 +18,17 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '../../core/database/entities/user.entity';
-import { PaginationDto } from '../../core/common/dto/pagination.dto';
+import { Roles } from '../../core/common/decorators/roles.decorator';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { Roles } from '../../core/decorators/roles.decorator';
 import { UserRole } from './enums/user-role.enum';
-import { JwtAuthGuard } from '../../core/guards/jwt-auth.guard';
-import { Public } from '../../core/decorators/public.decorator';
+import { JwtAuthGuard } from '../../core/common/guards/jwt-auth.guard';
+import { Public } from '../../core/common/decorators/public.decorator';
+import { PaginationDto } from '@core/common/dto/pagination.dto';
+
 
 @ApiTags('Users')
 @Controller('users')
-@UseInterceptors(ClassSerializerInterceptor) // Excluye propiedades con @Exclude()
+@UseInterceptors(ClassSerializerInterceptor)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -80,24 +83,5 @@ export class UsersController {
   @ApiResponse({ status: 404, description: 'User not found' })
   async remove(@Param('id') id: string): Promise<void> {
     return this.usersService.remove(id);
-  }
-
-  // Endpoints adicionales específicos para usuarios
-  @Get(':id/restaurants')
-  @ApiBearerAuth()
-  @Roles(UserRole.ADMIN, UserRole.RESTAURANT_OWNER)
-  @ApiOperation({ summary: "Get user's restaurants" })
-  @ApiResponse({ status: 200, description: "List of user's restaurants" })
-  async getUserRestaurants(@Param('id') id: string): Promise<Restaurant[]> {
-    return this.usersService.getUserRestaurants(id);
-  }
-
-  @Get(':id/orders')
-  @ApiBearerAuth()
-  @Roles(UserRole.ADMIN, UserRole.CUSTOMER, UserRole.RIDER)
-  @ApiOperation({ summary: "Get user's orders" })
-  @ApiResponse({ status: 200, description: "List of user's orders" })
-  async getUserOrders(@Param('id') id: string): Promise<Order[]> {
-    return this.usersService.getUserOrders(id);
   }
 }
