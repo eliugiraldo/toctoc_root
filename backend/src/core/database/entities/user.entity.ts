@@ -3,7 +3,7 @@ import { Restaurant } from './restaurant.entity';
 import { Order } from './order.entity'; 
 import { Location } from './location.entity';
 import { Review } from './review.entity';
-import { UserRole } from '../../../modules/users/enums/user-role.enum';
+import { Roles, Role } from '@shared/constants';
 
 @Entity({ name: 'users' })
 export class User {
@@ -27,10 +27,10 @@ export class User {
 
   @Column({ 
     type: 'enum', 
-    enum: UserRole,
-    default: UserRole.CUSTOMER
+    enum: Roles,
+    default: Roles.CUSTOMER
   })
-  role: UserRole;
+  role: Role;
 
   @Column({ 
     type: 'geography',

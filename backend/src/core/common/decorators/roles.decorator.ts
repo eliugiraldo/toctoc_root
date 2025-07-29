@@ -1,6 +1,10 @@
 // src/core/common/decorators/roles.decorator.ts
 import { SetMetadata } from '@nestjs/common';
-import { UserRole } from '../../../modules/users/enums/user-role.enum';
+import { Role } from '@shared/constants';
 
+/**
+ * Define roles permitidos para un endpoint
+ * Ejemplo: @Roles(Roles.ADMIN, Roles.RESTAURANT_OWNER)
+ */
 export const ROLES_KEY = 'roles';
-export const Roles = (...roles: UserRole[]) => SetMetadata(ROLES_KEY, roles);
+export const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);

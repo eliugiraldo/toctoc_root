@@ -17,7 +17,8 @@
       "@entities/*": ["core/database/entities/*"],
       "@utils/*": ["utils/*"],
       "@uploads/*": ["uploads/*"],
-      "@/*": ["*"]
+      "@/*": ["*"],
+      "@shared/*": ["shared/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

@@ -1,5 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
-import { UserRole } from '../../users/enums/user-role.enum';
+import { IsEmail, IsNotEmpty, IsString, MinLength, IsEnum, IsOptional } from 'class-validator';
+import { Roles, Role } from '@shared/constants'; // ✅ Importación corregida
 
 export class RegisterDto {
   @IsEmail()
@@ -15,5 +15,7 @@ export class RegisterDto {
   @IsNotEmpty()
   phone: string;
 
-  role?: UserRole;
+  @IsOptional()
+  @IsEnum(Roles)    // ✅ Validación con Roles
+  role?: Role;      // ✅ Tipo Role en lugar de UserRole
 }
