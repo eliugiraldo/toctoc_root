@@ -7,8 +7,12 @@ docker-compose.yml
 #node
 backend/node_modules/
 dist/
-.env    
+.env
+.env.local
+.env.*.local   
 *.log
+.env.example
+.env.example.local
 
 
 # OS

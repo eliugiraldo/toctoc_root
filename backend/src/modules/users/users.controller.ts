@@ -1,3 +1,4 @@
+
 // backend\src\modules\users\users.controller.ts
 
 import { 
@@ -20,11 +21,10 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '../../core/database/entities/user.entity';
 import { Roles } from '../../core/common/decorators/roles.decorator';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { UserRole } from './enums/user-role.enum';
+import { Roles as AppRoles } from '@shared/constants'; // ✅ Importación corregida
 import { JwtAuthGuard } from '../../core/common/guards/jwt-auth.guard';
 import { Public } from '../../core/common/decorators/public.decorator';
 import { PaginationDto } from '@core/common/dto/pagination.dto';
-
 
 @ApiTags('Users')
 @Controller('users')
@@ -44,7 +44,7 @@ export class UsersController {
 
   @Get()
   @ApiBearerAuth()
-  @Roles(UserRole.ADMIN)
+  @Roles(AppRoles.ADMIN) // ✅ Usando AppRoles
   @ApiOperation({ summary: 'Get all users (paginated)' })
   @ApiResponse({ status: 200, description: 'List of users', type: [User] })
   async findAll(@Query() paginationDto: PaginationDto): Promise<User[]> {
@@ -53,7 +53,7 @@ export class UsersController {
 
   @Get(':id')
   @ApiBearerAuth()
-  @Roles(UserRole.ADMIN, UserRole.RESTAURANT_OWNER, UserRole.CUSTOMER, UserRole.RIDER)
+  @Roles(AppRoles.ADMIN, AppRoles.RESTAURANT_OWNER, AppRoles.CUSTOMER, AppRoles.RIDER) // ✅ Usando AppRoles
   @ApiOperation({ summary: 'Get user by ID' })
   @ApiResponse({ status: 200, description: 'User details', type: User })
   @ApiResponse({ status: 404, description: 'User not found' })
@@ -63,7 +63,7 @@ export class UsersController {
 
   @Patch(':id')
   @ApiBearerAuth()
-  @Roles(UserRole.ADMIN, UserRole.RESTAURANT_OWNER, UserRole.CUSTOMER, UserRole.RIDER)
+  @Roles(AppRoles.ADMIN, AppRoles.RESTAURANT_OWNER, AppRoles.CUSTOMER, AppRoles.RIDER) // ✅ Usando AppRoles
   @ApiOperation({ summary: 'Update user information' })
   @ApiResponse({ status: 200, description: 'User updated', type: User })
   @ApiResponse({ status: 404, description: 'User not found' })
@@ -77,7 +77,7 @@ export class UsersController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiBearerAuth()
-  @Roles(UserRole.ADMIN)
+  @Roles(AppRoles.ADMIN) // ✅ Usando AppRoles
   @ApiOperation({ summary: 'Delete a user' })
   @ApiResponse({ status: 204, description: 'User deleted' })
   @ApiResponse({ status: 404, description: 'User not found' })
