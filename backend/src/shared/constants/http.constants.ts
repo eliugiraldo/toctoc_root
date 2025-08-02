@@ -1,9 +1,10 @@
-// src/shared/constants/http.constants.ts
 /**
- * Códigos HTTP ESTÁNDAR + personalizados
+ * Códigos de estado HTTP ESTÁNDAR (RFC 7231)
+ * Solo códigos oficiales de 3 dígitos
+ * Sin códigos personalizados ni mensajes específicos
  */
+
 export const HTTP_STATUS = {
-  // ESTÁNDARES (RFC 7231)
   OK: 200,
   CREATED: 201,
   NO_CONTENT: 204,
@@ -13,9 +14,8 @@ export const HTTP_STATUS = {
   NOT_FOUND: 404,
   CONFLICT: 409,
   INTERNAL_SERVER_ERROR: 500,
-
-  // PERSONALIZADOS (para logs/métricas)
-  INVALID_CREDENTIALS: 401001,
-  PAYMENT_REQUIRED: 402001,
-  ORDER_NOT_FOUND: 404001,
+  SERVICE_UNAVAILABLE: 503,
 } as const;
+
+// Tipo para usar en TypeScript
+export type HttpStatusCode = typeof HTTP_STATUS[keyof typeof HTTP_STATUS];

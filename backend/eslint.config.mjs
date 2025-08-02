@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['eslint.config.mjs'],
+    ignores: ['eslint.config.mjs'], // Asegúrate que el archivo se llama así o cambia esto
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
@@ -23,12 +23,16 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
     },
-  },
-  {
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-explicit-any': [
+        'error',
+        {
+          ignoreRestArgs: true,
+          fixToUnknown: true,
+        },
+      ],
       '@typescript-eslint/no-floating-promises': 'warn',
-      '@typescript-eslint/no-unsafe-argument': 'warn'
+      '@typescript-eslint/no-unsafe-argument': 'warn',
     },
-  },
+  }
 );

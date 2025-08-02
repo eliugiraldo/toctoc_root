@@ -1,60 +1,52 @@
 import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../../users/users.service';
 import { User } from '../../../core/database/entities/user.entity';
-import * as bcrypt from 'bcrypt';
-import { JwtPayload } from '../interfaces/jwt-payload.interface';
+import { generateRandomString } from '@core/utils/crypto/crypto.utils';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService,
-  ) {}
+  constructor(private usersService: UsersService) {}
 
+  /**
+   * Valida un usuario (implementación temporal para Fase 0)
+   * En Fase 2 se implementará con bcrypt
+   */
   async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.usersService.findByEmail(email);
-    if (user && await this.comparePasswords(password, user.passwordHash)) {
-      return user;
+    if (!user) {
+      return null;
     }
-    return null;
+
+    // En Fase 0, la validación es temporal/simple
+    // En Fase 2 se reemplazará con bcrypt.compare
+    return password === 'temporal123' ? user : null;
   }
 
+  /**
+   * Genera un token de acceso temporal (Fase 0)
+   * En Fase 2 se implementará con JWT real
+   */
   async login(user: User) {
-    const payload: JwtPayload = { 
-      sub: user.id, 
-      email: user.email, 
-      name: user.name,
-      role: user.role
-    };
-    
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: generateRandomString(64),
       user: {
         id: user.id,
         email: user.email,
         name: user.name,
-        role: user.role,
-        phone: user.phone,
-        profileImg: user.profileImg,
+        role: user.role
       }
     };
   }
 
+  /**
+   * Registra un nuevo usuario (sin hashing real en Fase 0)
+   * En Fase 2 se implementará con bcrypt
+   */
   async register(registerDto: any) {
-    const hashedPassword = await this.hashPassword(registerDto.password);
     const user = await this.usersService.create({
       ...registerDto,
-      passwordHash: hashedPassword,
+      passwordHash: 'temporal_hash'
     });
     return this.login(user);
-  }
-
-  async hashPassword(password: string): Promise<string> {
-    return bcrypt.hash(password, 12);
-  }
-
-  async comparePasswords(password: string, hash: string): Promise<boolean> {
-    return bcrypt.compare(password, hash);
   }
 }

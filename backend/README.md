@@ -2,7 +2,7 @@
 Backend para una aplicación de delivery de comida, construido con **NestJS**, **TypeScript** y **PostgreSQL**.  
 
 ## 🛠️ Tecnologías  
-- **Framework**: [NestJS](https://nestjs.com) (v11.1.1)  
+- **Framework**: [NestJS](https://nestjs.com) (v10.2.5)  
 - **Lenguaje**: TypeScript  
 - **Base de Datos**: PostgreSQL (con TypeORM)  
 - **Autenticación**: JWT, Passport  

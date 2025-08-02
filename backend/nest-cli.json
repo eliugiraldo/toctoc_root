@@ -3,8 +3,8 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "tsConfigPath": "tsconfig.json",
-    "webpack": true,
+    "tsConfigPath": "tsconfig.build.json",
+    "builder": "webpack",
     "plugins": ["@nestjs/swagger"],
     "assets": ["**/*.hbs"],
     "watchAssets": true

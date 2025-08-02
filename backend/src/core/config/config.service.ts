@@ -11,23 +11,9 @@ export class ConfigService {
    * @param defaultValue Optional default value
    * @returns The configuration value or default value
    */
-  get<T = any>(key: string): T | undefined;
-  get<T = any>(key: string, defaultValue: T): T;
   get<T = any>(key: string, defaultValue?: T): T | undefined {
-    // Solución que funciona con la API real de @nestjs/config
-    const value = this.nestConfigService.get<T>(key);
-    
-    // Si no hay valor y se proporcionó default, retornar default
-    if (value === undefined && defaultValue !== undefined) {
-      return defaultValue;
-    }
-    
-    // Si no hay valor y no hay default, retornar undefined
-    if (value === undefined && defaultValue === undefined) {
-      return undefined;
-    }
-    
-    return value;
+    // La solución es usar una aserción de tipo explícita para ayudar a TypeScript
+    return (this.nestConfigService.get as any)(key, defaultValue);
   }
 
   /**
@@ -41,6 +27,34 @@ export class ConfigService {
       throw new Error(`Configuration key "${key}" is required but not found`);
     }
     return value;
+  }
+
+  /**
+   * Get a configuration value as a number
+   * @param key The configuration key
+   * @returns The numeric value
+   * @throws Error if value is not a valid number
+   */
+  getNumber(key: string): number {
+    const value = this.getOrThrow<string>(key);
+    const numberValue = Number(value);
+    if (isNaN(numberValue)) {
+      throw new Error(`Config error: "${key}" must be a number`);
+    }
+    return numberValue;
+  }
+
+  /**
+   * Get a configuration value as a boolean
+   * @param key The configuration key
+   * @returns The boolean value
+   * @throws Error if value is not "true" or "false"
+   */
+  getBoolean(key: string): boolean {
+    const value = this.getOrThrow<string>(key);
+    if (value === 'true') return true;
+    if (value === 'false') return false;
+    throw new Error(`Config error: "${key}" must be "true" or "false"`);
   }
 
   /**
